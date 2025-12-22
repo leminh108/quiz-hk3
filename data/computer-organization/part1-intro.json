@@ -1,0 +1,32 @@
+{
+  "partId": "intro",
+  "partName": "Giới thiệu Cấu trúc và tổ chức máy tính",
+  "questions": [
+    {
+      "id": 1,
+      "type": "single",
+      "question": "CPU (Central Processing Unit) có chức năng gì?",
+      "options": {
+        "A": "Lưu trữ dữ liệu tạm thời",
+        "B": "Xử lý và điều khiển mọi hoạt động của máy tính",
+        "C": "Hiển thị hình ảnh",
+        "D": "Kết nối mạng"
+      },
+      "correctAnswer": "B",
+      "explanation": "CPU là bộ xử lý trung tâm, điều khiển và xử lý dữ liệu."
+    },
+    {
+      "id": 2,
+      "type": "single",
+      "question": "RAM là gì?",
+      "options": {
+        "A": "Bộ nhớ chỉ đọc",
+        "B": "Bộ nhớ truy cập ngẫu nhiên, lưu trữ tạm thời dữ liệu khi máy tính hoạt động",
+        "C": "Ổ cứng lưu trữ lâu dài",
+        "D": "Thiết bị xuất dữ liệu"
+      },
+      "correctAnswer": "B",
+      "explanation": "RAM là bộ nhớ truy cập ngẫu nhiên, lưu trữ tạm thời dữ liệu."
+    }
+  ]
+}

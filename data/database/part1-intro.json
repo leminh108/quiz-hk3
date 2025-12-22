@@ -1,0 +1,32 @@
+{
+  "partId": "intro",
+  "partName": "Giới thiệu Cơ sở dữ liệu",
+  "questions": [
+    {
+      "id": 1,
+      "type": "single",
+      "question": "Cơ sở dữ liệu (Database) là gì?",
+      "options": {
+        "A": "Một tập hợp các bảng tính",
+        "B": "Một tập hợp dữ liệu có tổ chức, được lưu trữ và truy cập điện tử",
+        "C": "Một phần mềm quản lý file",
+        "D": "Một hệ điều hành"
+      },
+      "correctAnswer": "B",
+      "explanation": "Cơ sở dữ liệu là tập hợp dữ liệu có tổ chức, lưu trữ và truy cập điện tử."
+    },
+    {
+      "id": 2,
+      "type": "single",
+      "question": "Hệ quản trị cơ sở dữ liệu (DBMS) có chức năng chính nào?",
+      "options": {
+        "A": "Lưu trữ và truy xuất dữ liệu",
+        "B": "Bảo mật và kiểm soát truy cập",
+        "C": "Quản lý tính nhất quán và toàn vẹn dữ liệu",
+        "D": "Tất cả các đáp án trên"
+      },
+      "correctAnswer": "D",
+      "explanation": "DBMS thực hiện tất cả các chức năng trên."
+    }
+  ]
+}

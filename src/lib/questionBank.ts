@@ -6,6 +6,10 @@ import { englishParts } from '@/../data/english/index';
 import { englishMeta } from '@/../data/english/meta';
 import { networkParts } from '@/../data/network/index';
 import { networkMeta } from '@/../data/network/meta';
+import { databaseParts } from '@/../data/database/index';
+import { databaseMeta } from '@/../data/database/meta';
+import { computerOrganizationParts } from '@/../data/computer-organization/index';
+import { computerOrganizationMeta } from '@/../data/computer-organization/meta';
 
 /**
 // Network part static import
@@ -75,6 +79,18 @@ const networkBank = mergeQuestionParts(
 export const questionBanks: QuestionBank[] = [
   networkBank as QuestionBank,
   englishBank,
+  mergeQuestionParts(
+    databaseMeta.id,
+    databaseMeta.name,
+    databaseMeta.description,
+    databaseParts as QuestionPart[]
+  ),
+  mergeQuestionParts(
+    computerOrganizationMeta.id,
+    computerOrganizationMeta.name,
+    computerOrganizationMeta.description,
+    computerOrganizationParts as QuestionPart[]
+  ),
 ];
 
 export function getQuestionBank(bankId: string): QuestionBank | undefined {
