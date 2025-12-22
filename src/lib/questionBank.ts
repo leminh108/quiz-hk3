@@ -1,28 +1,15 @@
 import { QuestionBank, Question } from '@/types/quiz';
 
 // Import regular question banks
-import networkBank from '@/../data/network.json';
-import dsaBank from '@/../data/dsa.json';
-import calculusBank from '@/../data/calculus.json';
 
-// Import modular English bank
-import englishIndex from '@/../data/english/index.json';
-import englishPart1 from '@/../data/english/part1-prepositions-time.json';
-import englishPart2 from '@/../data/english/part2-prepositions-place.json';
-import englishPart3 from '@/../data/english/part3-prepositions-other.json';
-import englishPart4 from '@/../data/english/part4-conjunctions.json';
-import englishPart5 from '@/../data/english/part5-passages.json';
-import englishPart6 from '@/../data/english/part6-relative-pronouns.json';
-import englishPart7 from '@/../data/english/part7-relative-pronouns-extended.json';
-import englishPart8 from '@/../data/english/part8-subjunctive-mood.json';
-import englishPart9 from '@/../data/english/part9-subjunctive-mood-extended.json';
-import englishPart10 from '@/../data/english/part10-subjunctive-mood-passages.json';
-import englishPart11 from '@/../data/english/part11-subject-verb-agreement.json';
-import englishPart12 from '@/../data/english/part12-subject-verb-agreement-extended.json';
-import englishPart13 from '@/../data/english/part13-subject-verb-agreement-passages.json';
+import { englishParts } from '@/../data/english/index';
+import { englishMeta } from '@/../data/english/meta';
+import { networkParts } from '@/../data/network/index';
+import { networkMeta } from '@/../data/network/meta';
 
 /**
- * Interface for modular question parts
+// Network part static import
+import networkPart1 from '@/../data/network/network.json';
  */
 interface QuestionPart {
   partId: string;
@@ -40,11 +27,11 @@ function mergeQuestionParts(
   parts: QuestionPart[]
 ): QuestionBank {
   const allQuestions: Question[] = [];
-  
+
   for (const part of parts) {
     allQuestions.push(...(part.questions as Question[]));
   }
-  
+
   // Count total questions including sub-questions
   let totalQuestions = 0;
   allQuestions.forEach(q => {
@@ -54,7 +41,7 @@ function mergeQuestionParts(
       totalQuestions += 1;
     }
   });
-  
+
   return {
     id,
     name,
@@ -63,32 +50,30 @@ function mergeQuestionParts(
   };
 }
 
-// Build the English bank from parts
+
+
+// Build English bank from module
 const englishBank = mergeQuestionParts(
-  englishIndex.id,
-  englishIndex.name,
-  englishIndex.description,
-  [
-    englishPart1 as QuestionPart,
-    englishPart2 as QuestionPart,
-    englishPart3 as QuestionPart,
-    englishPart4 as QuestionPart,
-    englishPart5 as QuestionPart,
-    englishPart6 as QuestionPart,
-    englishPart7 as QuestionPart,
-    englishPart8 as QuestionPart,
-    englishPart9 as QuestionPart,
-    englishPart10 as QuestionPart,
-    englishPart11 as QuestionPart,
-    englishPart12 as QuestionPart,
-    englishPart13 as QuestionPart,
-  ]
+  englishMeta.id,
+  englishMeta.name,
+  englishMeta.description,
+  englishParts as QuestionPart[]
+);
+
+// Build Network bank from module (convert to QuestionPart nếu cần)
+const networkBank = mergeQuestionParts(
+  networkMeta.id,
+  networkMeta.name,
+  networkMeta.description,
+  networkParts.map((part: any) => ({
+    partId: part.id,
+    partName: part.name,
+    questions: part.questions as import('@/types/quiz').Question[],
+  }))
 );
 
 export const questionBanks: QuestionBank[] = [
   networkBank as QuestionBank,
-  dsaBank as QuestionBank,
-  calculusBank as QuestionBank,
   englishBank,
 ];
 
