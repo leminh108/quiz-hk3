@@ -6,11 +6,11 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { getQuestionBank, getRandomQuestions, getOrderedQuestions } from '@/lib/questionBank';
-import { 
-  Question, 
-  QuizAnswer, 
-  WrongQuestion, 
-  isPassageQuestion, 
+import {
+  Question,
+  QuizAnswer,
+  WrongQuestion,
+  isPassageQuestion,
   isSingleQuestion,
   PassageQuestion,
   SingleQuestion,
@@ -48,7 +48,7 @@ export default function QuizPage() {
   // Save session to localStorage
   const saveSession = useCallback(() => {
     if (bankId === 'wrong' || questions.length === 0) return;
-    
+
     quizSessionStorage.save({
       bankId,
       bankName,
@@ -81,7 +81,7 @@ export default function QuizPage() {
         wrongQuestions.map((wq) => ({
           questionId: wq.question.id,
           selectedAnswer: null,
-          subAnswers: isPassageQuestion(wq.question) 
+          subAnswers: isPassageQuestion(wq.question)
             ? wq.question.subQuestions.reduce((acc, sq) => ({ ...acc, [sq.id]: null }), {})
             : undefined,
         }))
@@ -90,7 +90,7 @@ export default function QuizPage() {
     } else {
       // Check if we should continue a saved session
       const savedSession = quizSessionStorage.getSession(bankId);
-      
+
       if (shouldContinue && savedSession) {
         // Restore saved session
         setQuestions(savedSession.questions);
@@ -107,7 +107,7 @@ export default function QuizPage() {
           return;
         }
         // Use ordered questions for study mode, random for quiz mode
-        const selectedQuestions = isStudyMode 
+        const selectedQuestions = isStudyMode
           ? getOrderedQuestions(bankId, count)
           : getRandomQuestions(bankId, count);
         setQuestions(selectedQuestions);
@@ -116,7 +116,7 @@ export default function QuizPage() {
           selectedQuestions.map((q) => ({
             questionId: q.id,
             selectedAnswer: null,
-            subAnswers: isPassageQuestion(q) 
+            subAnswers: isPassageQuestion(q)
               ? q.subQuestions.reduce((acc, sq) => ({ ...acc, [sq.id]: null }), {})
               : undefined,
           }))
@@ -135,7 +135,7 @@ export default function QuizPage() {
   // Also clear revealed state for the new question in study mode
   useEffect(() => {
     setActiveSubIndex(0);
-    
+
     // In study mode, clear revealed answers for the current question
     // so user has to click again to see the answer
     if (isStudyMode && questions[currentIndex]) {
@@ -152,7 +152,7 @@ export default function QuizPage() {
         }
         return newSet;
       });
-      
+
       // Also reset the answer for this question
       setAnswers(prev => {
         const newAnswers = [...prev];
@@ -213,12 +213,12 @@ export default function QuizPage() {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Enter') {
         e.preventDefault(); // Prevent any default Enter behavior
-        
+
         if (isPassageQuestion(currentQuestion)) {
           // For passage questions: check if current sub-question has revealed answer
           const currentSubQuestion = currentQuestion.subQuestions[activeSubIndex];
           const subQuestionKey = `sub-${currentQuestion.id}-${currentSubQuestion.id}`;
-          
+
           if (isAnswerRevealed(subQuestionKey)) {
             // Move to next sub-question or next main question
             if (activeSubIndex < currentQuestion.subQuestions.length - 1) {
@@ -231,7 +231,7 @@ export default function QuizPage() {
         } else {
           // For single questions: check if answer is revealed
           const questionKey = `single-${currentQuestion.id}`;
-          
+
           if (isAnswerRevealed(questionKey) && currentIndex < questions.length - 1) {
             setCurrentIndex(currentIndex + 1);
           }
@@ -408,10 +408,10 @@ export default function QuizPage() {
             (key) => {
               const isCorrect = key === question.correctAnswer;
               const isSelected = currentAnswer?.selectedAnswer === key;
-              
+
               // Determine button style
               let buttonStyle = 'border-gray-200 hover:border-gray-300 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800';
-              
+
               if (isStudyMode && revealed) {
                 if (isCorrect) {
                   buttonStyle = 'border-green-500 bg-green-50 dark:bg-green-900/30';
@@ -436,11 +436,10 @@ export default function QuizPage() {
                   className={`w-full p-4 md:p-6 text-left rounded-lg border-2 transition-all ${buttonStyle}`}
                 >
                   <div className="flex items-start gap-3">
-                    <span className={`shrink-0 w-8 h-8 flex items-center justify-center rounded-full font-semibold text-sm ${
-                      isStudyMode && revealed && isCorrect 
-                        ? 'bg-green-500 text-white' 
-                        : 'bg-gray-100 dark:bg-gray-700'
-                    }`}>
+                    <span className={`shrink-0 w-8 h-8 flex items-center justify-center rounded-full font-semibold text-sm ${isStudyMode && revealed && isCorrect
+                      ? 'bg-green-500 text-white'
+                      : 'bg-gray-100 dark:bg-gray-700'
+                      }`}>
                       {key}
                     </span>
                     <span className="flex-1 text-base">
@@ -486,21 +485,20 @@ export default function QuizPage() {
     // Highlight blanks in the passage
     const renderPassageWithHighlights = () => {
       let passageText = question.passage;
-      
+
       // Replace blank markers with styled spans
       question.subQuestions.forEach((sq, idx) => {
         const blankPattern = new RegExp(`____${sq.id}____`, 'g');
         const isActive = idx === activeSubIndex;
         const hasAnswer = currentAnswer?.subAnswers?.[sq.id];
-        
+
         passageText = passageText.replace(
           blankPattern,
-          `<span class="inline-block min-w-20 px-2 py-1 mx-1 rounded font-semibold ${
-            isActive 
-              ? 'bg-blue-500 text-white' 
-              : hasAnswer 
-                ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300'
-                : 'bg-gray-200 dark:bg-gray-700'
+          `<span class="inline-block min-w-20 px-2 py-1 mx-1 rounded font-semibold ${isActive
+            ? 'bg-blue-500 text-white'
+            : hasAnswer
+              ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300'
+              : 'bg-gray-200 dark:bg-gray-700'
           }">(${sq.id})</span>`
         );
       });
@@ -515,8 +513,8 @@ export default function QuizPage() {
           <div className="text-center border-b pb-4 mb-4">
             <h2 className="text-xl font-bold">{question.passageTitle}</h2>
             <span className="text-sm text-muted-foreground">
-              {question.passageType === 'fill-in-the-blank' 
-                ? 'Điền từ vào chỗ trống' 
+              {question.passageType === 'fill-in-the-blank'
+                ? 'Điền từ vào chỗ trống'
                 : 'Đọc hiểu'}
             </span>
           </div>
@@ -524,7 +522,7 @@ export default function QuizPage() {
 
         {/* Passage Text */}
         <div className="p-4 md:p-6 bg-gray-50 dark:bg-gray-800/50 rounded-lg border">
-          <div 
+          <div
             className="prose dark:prose-invert max-w-none leading-relaxed whitespace-pre-line"
             dangerouslySetInnerHTML={{ __html: renderPassageWithHighlights() }}
           />
@@ -538,13 +536,12 @@ export default function QuizPage() {
               <button
                 key={sq.id}
                 onClick={() => setActiveSubIndex(idx)}
-                className={`px-4 py-2 rounded-lg font-medium transition-all ${
-                  idx === activeSubIndex
-                    ? 'bg-blue-500 text-white'
-                    : hasAnswer
+                className={`px-4 py-2 rounded-lg font-medium transition-all ${idx === activeSubIndex
+                  ? 'bg-blue-500 text-white'
+                  : hasAnswer
                     ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300'
                     : 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300'
-                }`}
+                  }`}
               >
                 Câu {sq.id}
               </button>
@@ -569,10 +566,10 @@ export default function QuizPage() {
                     (key) => {
                       const isCorrect = key === currentSubQuestion.correctAnswer;
                       const isSelected = subAnswer === key;
-                      
+
                       // Determine button style
                       let buttonStyle = 'border-gray-200 hover:border-gray-300 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800';
-                      
+
                       if (isStudyMode && subRevealed) {
                         if (isCorrect) {
                           buttonStyle = 'border-green-500 bg-green-50 dark:bg-green-900/30';
@@ -597,11 +594,10 @@ export default function QuizPage() {
                           className={`w-full p-4 text-left rounded-lg border-2 transition-all ${buttonStyle}`}
                         >
                           <div className="flex items-start gap-3">
-                            <span className={`shrink-0 w-8 h-8 flex items-center justify-center rounded-full font-semibold text-sm ${
-                              isStudyMode && subRevealed && isCorrect 
-                                ? 'bg-green-500 text-white' 
-                                : 'bg-gray-100 dark:bg-gray-700'
-                            }`}>
+                            <span className={`shrink-0 w-8 h-8 flex items-center justify-center rounded-full font-semibold text-sm ${isStudyMode && subRevealed && isCorrect
+                              ? 'bg-green-500 text-white'
+                              : 'bg-gray-100 dark:bg-gray-700'
+                              }`}>
                               {key}
                             </span>
                             <span className="flex-1 text-base">
@@ -669,15 +665,33 @@ export default function QuizPage() {
       <div className="container mx-auto px-4 max-w-4xl">
         {/* Header */}
         <div className="mb-6">
-          <div className="flex items-center gap-3 mb-2">
-            <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">
-              {bankName}
-            </h1>
-            {isStudyMode && (
-              <span className="px-3 py-1 bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300 rounded-full text-sm font-medium">
-                📚 Chế độ học tập
-              </span>
-            )}
+          <div className="flex items-center gap-3 mb-2 justify-between">
+            <div className='flex items-center gap-4'>
+              <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">
+                {bankName}
+              </h1>
+              {isStudyMode && (
+                <span className="px-3 py-1 bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300 rounded-full text-sm font-medium">
+                  📚 Chế độ học tập
+                </span>
+              )}
+            </div>
+            <div>
+
+              {isStudyMode && (
+                <div className=''>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => router.push('/')}
+                    className="text-gray-500 hover:text-gray-700  border-2 border-green-600 rounded-lg p-2
+                    "
+                  >
+                    ← Quay về trang chủ
+                  </Button>
+                </div>
+              )}
+            </div>
           </div>
           <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-300">
             <span>
@@ -721,8 +735,8 @@ export default function QuizPage() {
             {isStudyMode ? (
               // Study mode: only navigation, no submit
               currentIndex === questions.length - 1 ? (
-                <Button 
-                  onClick={() => router.push('/')} 
+                <Button
+                  onClick={() => router.push('/')}
                   size="lg"
                   className="bg-green-600 hover:bg-green-700"
                 >
@@ -807,13 +821,12 @@ export default function QuizPage() {
                 <button
                   key={idx}
                   onClick={() => setCurrentIndex(idx)}
-                  className={`w-10 h-10 rounded-lg font-medium text-sm transition-all ${
-                    idx === currentIndex
-                      ? 'bg-blue-500 text-white'
-                      : isAnswered
+                  className={`w-10 h-10 rounded-lg font-medium text-sm transition-all ${idx === currentIndex
+                    ? 'bg-blue-500 text-white'
+                    : isAnswered
                       ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300'
                       : 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300'
-                  }`}
+                    }`}
                   title={isPassageQuestion(q) ? `📖 ${q.passageTitle || 'Đoạn văn'}` : undefined}
                 >
                   {idx + 1}
