@@ -5,7 +5,7 @@ import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
-import { getQuestionBank, getRandomQuestions } from '@/lib/questionBank';
+import { getQuestionBank, getRandomQuestions, getOrderedQuestions } from '@/lib/questionBank';
 import { 
   Question, 
   QuizAnswer, 
@@ -32,6 +32,7 @@ export default function QuizPage() {
   const bankId = params.bankId as string;
   const count = parseInt(searchParams.get('count') || '10');
   const shouldContinue = searchParams.get('continue') === 'true';
+  const isStudyMode = searchParams.get('mode') === 'study';
 
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -41,6 +42,8 @@ export default function QuizPage() {
   const [startTime, setStartTime] = useState<number>(Date.now());
   // For passage questions: track which sub-question is active
   const [activeSubIndex, setActiveSubIndex] = useState(0);
+  // For study mode: track revealed answers
+  const [revealedAnswers, setRevealedAnswers] = useState<Set<string>>(new Set());
 
   // Save session to localStorage
   const saveSession = useCallback(() => {
@@ -103,7 +106,10 @@ export default function QuizPage() {
           router.push('/');
           return;
         }
-        const selectedQuestions = getRandomQuestions(bankId, count);
+        // Use ordered questions for study mode, random for quiz mode
+        const selectedQuestions = isStudyMode 
+          ? getOrderedQuestions(bankId, count)
+          : getRandomQuestions(bankId, count);
         setQuestions(selectedQuestions);
         setBankName(bank.name);
         setAnswers(
@@ -123,12 +129,46 @@ export default function QuizPage() {
         setIsLoading(false);
       }
     }
-  }, [bankId, count, router, shouldContinue]);
+  }, [bankId, count, router, shouldContinue, isStudyMode]);
 
   // Reset active sub-question when changing main question
+  // Also clear revealed state for the new question in study mode
   useEffect(() => {
     setActiveSubIndex(0);
-  }, [currentIndex]);
+    
+    // In study mode, clear revealed answers for the current question
+    // so user has to click again to see the answer
+    if (isStudyMode && questions[currentIndex]) {
+      const q = questions[currentIndex];
+      setRevealedAnswers(prev => {
+        const newSet = new Set(prev);
+        if (isPassageQuestion(q)) {
+          // Clear all sub-question reveals for this passage
+          q.subQuestions.forEach(sq => {
+            newSet.delete(`sub-${q.id}-${sq.id}`);
+          });
+        } else {
+          newSet.delete(`single-${q.id}`);
+        }
+        return newSet;
+      });
+      
+      // Also reset the answer for this question
+      setAnswers(prev => {
+        const newAnswers = [...prev];
+        if (newAnswers[currentIndex]) {
+          newAnswers[currentIndex] = {
+            ...newAnswers[currentIndex],
+            selectedAnswer: null,
+            subAnswers: isPassageQuestion(q)
+              ? q.subQuestions.reduce((acc, sq) => ({ ...acc, [sq.id]: null }), {})
+              : undefined,
+          };
+        }
+        return newAnswers;
+      });
+    }
+  }, [currentIndex, isStudyMode]);
 
   const currentQuestion = questions[currentIndex];
   const currentAnswer = answers[currentIndex];
@@ -155,6 +195,53 @@ export default function QuizPage() {
     };
     setAnswers(newAnswers);
   };
+
+  // For study mode: reveal answer for current question
+  const handleRevealAnswer = (questionKey: string) => {
+    setRevealedAnswers(prev => new Set(prev).add(questionKey));
+  };
+
+  // Check if answer is revealed for a specific question
+  const isAnswerRevealed = (questionKey: string) => {
+    return revealedAnswers.has(questionKey);
+  };
+
+  // Handle Enter key to go to next question in study mode
+  useEffect(() => {
+    if (!isStudyMode || isLoading || !currentQuestion) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        e.preventDefault(); // Prevent any default Enter behavior
+        
+        if (isPassageQuestion(currentQuestion)) {
+          // For passage questions: check if current sub-question has revealed answer
+          const currentSubQuestion = currentQuestion.subQuestions[activeSubIndex];
+          const subQuestionKey = `sub-${currentQuestion.id}-${currentSubQuestion.id}`;
+          
+          if (isAnswerRevealed(subQuestionKey)) {
+            // Move to next sub-question or next main question
+            if (activeSubIndex < currentQuestion.subQuestions.length - 1) {
+              setActiveSubIndex(activeSubIndex + 1);
+            } else if (currentIndex < questions.length - 1) {
+              setCurrentIndex(currentIndex + 1);
+              // Reset active sub index is already handled by another useEffect
+            }
+          }
+        } else {
+          // For single questions: check if answer is revealed
+          const questionKey = `single-${currentQuestion.id}`;
+          
+          if (isAnswerRevealed(questionKey) && currentIndex < questions.length - 1) {
+            setCurrentIndex(currentIndex + 1);
+          }
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isStudyMode, isLoading, currentQuestion, currentIndex, activeSubIndex, questions.length, revealedAnswers]);
 
   const handleNext = () => {
     if (currentIndex < questions.length - 1) {
@@ -306,38 +393,91 @@ export default function QuizPage() {
     return renderSingleQuestion(currentQuestion as SingleQuestion);
   };
 
-  const renderSingleQuestion = (question: SingleQuestion) => (
-    <>
-      <h2 className="text-lg md:text-xl font-semibold mb-6 leading-relaxed">
-        {question.question}
-      </h2>
+  const renderSingleQuestion = (question: SingleQuestion) => {
+    const questionKey = `single-${question.id}`;
+    const revealed = isAnswerRevealed(questionKey);
 
-      <div className="space-y-3">
-        {(Object.keys(question.options) as Array<'A' | 'B' | 'C' | 'D'>).map(
-          (key) => (
-            <button
-              key={key}
-              onClick={() => handleAnswerSelect(key)}
-              className={`w-full p-4 md:p-6 text-left rounded-lg border-2 transition-all ${
-                currentAnswer?.selectedAnswer === key
-                  ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
-                  : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800'
-              }`}
-            >
-              <div className="flex items-start gap-3">
-                <span className="shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-700 font-semibold text-sm">
-                  {key}
-                </span>
-                <span className="flex-1 text-base">
-                  {question.options[key]}
-                </span>
-              </div>
-            </button>
-          )
+    return (
+      <>
+        <h2 className="text-lg md:text-xl font-semibold mb-6 leading-relaxed">
+          {question.question}
+        </h2>
+
+        <div className="space-y-3">
+          {(Object.keys(question.options) as Array<'A' | 'B' | 'C' | 'D'>).map(
+            (key) => {
+              const isCorrect = key === question.correctAnswer;
+              const isSelected = currentAnswer?.selectedAnswer === key;
+              
+              // Determine button style
+              let buttonStyle = 'border-gray-200 hover:border-gray-300 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800';
+              
+              if (isStudyMode && revealed) {
+                if (isCorrect) {
+                  buttonStyle = 'border-green-500 bg-green-50 dark:bg-green-900/30';
+                } else if (isSelected && !isCorrect) {
+                  buttonStyle = 'border-red-500 bg-red-50 dark:bg-red-900/30';
+                }
+              } else if (isSelected) {
+                buttonStyle = 'border-blue-500 bg-blue-50 dark:bg-blue-900/20';
+              }
+
+              return (
+                <button
+                  key={key}
+                  onClick={() => {
+                    if (isStudyMode) {
+                      handleAnswerSelect(key);
+                      handleRevealAnswer(questionKey);
+                    } else {
+                      handleAnswerSelect(key);
+                    }
+                  }}
+                  className={`w-full p-4 md:p-6 text-left rounded-lg border-2 transition-all ${buttonStyle}`}
+                >
+                  <div className="flex items-start gap-3">
+                    <span className={`shrink-0 w-8 h-8 flex items-center justify-center rounded-full font-semibold text-sm ${
+                      isStudyMode && revealed && isCorrect 
+                        ? 'bg-green-500 text-white' 
+                        : 'bg-gray-100 dark:bg-gray-700'
+                    }`}>
+                      {key}
+                    </span>
+                    <span className="flex-1 text-base">
+                      {question.options[key]}
+                    </span>
+                    {isStudyMode && revealed && isCorrect && (
+                      <span className="text-green-600 font-semibold">✓ Đúng</span>
+                    )}
+                  </div>
+                </button>
+              );
+            }
+          )}
+        </div>
+
+        {/* Show explanation in study mode when answer is revealed */}
+        {isStudyMode && revealed && question.explanation && (
+          <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+            <p className="font-semibold text-blue-700 dark:text-blue-300 mb-2">💡 Giải thích:</p>
+            <p className="text-gray-700 dark:text-gray-300 whitespace-pre-line">{question.explanation}</p>
+          </div>
         )}
-      </div>
-    </>
-  );
+
+        {/* Study mode hints */}
+        {isStudyMode && !revealed && (
+          <p className="mt-4 text-center text-sm text-gray-500">
+            👆 Click vào đáp án để xem kết quả và giải thích
+          </p>
+        )}
+        {isStudyMode && revealed && currentIndex < questions.length - 1 && (
+          <p className="mt-4 text-center text-sm text-green-600 dark:text-green-400 font-medium">
+            ⏎ Nhấn Enter để qua câu tiếp theo
+          </p>
+        )}
+      </>
+    );
+  };
 
   const renderPassageQuestion = (question: PassageQuestion) => {
     const currentSubQuestion = question.subQuestions[activeSubIndex];
@@ -418,30 +558,87 @@ export default function QuizPage() {
             Câu {currentSubQuestion.id}: {currentSubQuestion.question}
           </h3>
 
-          <div className="space-y-3">
-            {(Object.keys(currentSubQuestion.options) as Array<'A' | 'B' | 'C' | 'D'>).map(
-              (key) => (
-                <button
-                  key={key}
-                  onClick={() => handleSubAnswerSelect(currentSubQuestion.id, key)}
-                  className={`w-full p-4 text-left rounded-lg border-2 transition-all ${
-                    subAnswer === key
-                      ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
-                      : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800'
-                  }`}
-                >
-                  <div className="flex items-start gap-3">
-                    <span className="shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-700 font-semibold text-sm">
-                      {key}
-                    </span>
-                    <span className="flex-1 text-base">
-                      {currentSubQuestion.options[key]}
-                    </span>
+          {(() => {
+            const subQuestionKey = `sub-${question.id}-${currentSubQuestion.id}`;
+            const subRevealed = isAnswerRevealed(subQuestionKey);
+
+            return (
+              <>
+                <div className="space-y-3">
+                  {(Object.keys(currentSubQuestion.options) as Array<'A' | 'B' | 'C' | 'D'>).map(
+                    (key) => {
+                      const isCorrect = key === currentSubQuestion.correctAnswer;
+                      const isSelected = subAnswer === key;
+                      
+                      // Determine button style
+                      let buttonStyle = 'border-gray-200 hover:border-gray-300 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800';
+                      
+                      if (isStudyMode && subRevealed) {
+                        if (isCorrect) {
+                          buttonStyle = 'border-green-500 bg-green-50 dark:bg-green-900/30';
+                        } else if (isSelected && !isCorrect) {
+                          buttonStyle = 'border-red-500 bg-red-50 dark:bg-red-900/30';
+                        }
+                      } else if (isSelected) {
+                        buttonStyle = 'border-blue-500 bg-blue-50 dark:bg-blue-900/20';
+                      }
+
+                      return (
+                        <button
+                          key={key}
+                          onClick={() => {
+                            if (isStudyMode) {
+                              handleSubAnswerSelect(currentSubQuestion.id, key);
+                              handleRevealAnswer(subQuestionKey);
+                            } else {
+                              handleSubAnswerSelect(currentSubQuestion.id, key);
+                            }
+                          }}
+                          className={`w-full p-4 text-left rounded-lg border-2 transition-all ${buttonStyle}`}
+                        >
+                          <div className="flex items-start gap-3">
+                            <span className={`shrink-0 w-8 h-8 flex items-center justify-center rounded-full font-semibold text-sm ${
+                              isStudyMode && subRevealed && isCorrect 
+                                ? 'bg-green-500 text-white' 
+                                : 'bg-gray-100 dark:bg-gray-700'
+                            }`}>
+                              {key}
+                            </span>
+                            <span className="flex-1 text-base">
+                              {currentSubQuestion.options[key]}
+                            </span>
+                            {isStudyMode && subRevealed && isCorrect && (
+                              <span className="text-green-600 font-semibold">✓ Đúng</span>
+                            )}
+                          </div>
+                        </button>
+                      );
+                    }
+                  )}
+                </div>
+
+                {/* Show explanation in study mode when answer is revealed */}
+                {isStudyMode && subRevealed && currentSubQuestion.explanation && (
+                  <div className="mt-4 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                    <p className="font-semibold text-blue-700 dark:text-blue-300 mb-2">💡 Giải thích:</p>
+                    <p className="text-gray-700 dark:text-gray-300 whitespace-pre-line">{currentSubQuestion.explanation}</p>
                   </div>
-                </button>
-              )
-            )}
-          </div>
+                )}
+
+                {/* Study mode hints */}
+                {isStudyMode && !subRevealed && (
+                  <p className="mt-4 text-center text-sm text-gray-500">
+                    👆 Click vào đáp án để xem kết quả và giải thích
+                  </p>
+                )}
+                {isStudyMode && subRevealed && (activeSubIndex < question.subQuestions.length - 1 || currentIndex < questions.length - 1) && (
+                  <p className="mt-4 text-center text-sm text-green-600 dark:text-green-400 font-medium">
+                    ⏎ Nhấn Enter để qua {activeSubIndex < question.subQuestions.length - 1 ? 'câu con tiếp theo' : 'đoạn văn tiếp theo'}
+                  </p>
+                )}
+              </>
+            );
+          })()}
 
           {/* Sub-question navigation */}
           <div className="flex justify-between mt-4 pt-4 border-t">
@@ -472,9 +669,16 @@ export default function QuizPage() {
       <div className="container mx-auto px-4 max-w-4xl">
         {/* Header */}
         <div className="mb-6">
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">
-            {bankName}
-          </h1>
+          <div className="flex items-center gap-3 mb-2">
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">
+              {bankName}
+            </h1>
+            {isStudyMode && (
+              <span className="px-3 py-1 bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300 rounded-full text-sm font-medium">
+                📚 Chế độ học tập
+              </span>
+            )}
+          </div>
           <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-300">
             <span>
               Đề {currentIndex + 1}/{questions.length}
@@ -514,25 +718,43 @@ export default function QuizPage() {
           </Button>
 
           <div className="flex gap-2">
-            {currentIndex === questions.length - 1 ? (
-              <Button
-                onClick={handleSubmit}
-                disabled={answeredCount === 0}
-                size="lg"
-                className="bg-green-600 hover:bg-green-700"
-              >
-                Nộp bài ({answeredCount}/{totalCount})
-              </Button>
+            {isStudyMode ? (
+              // Study mode: only navigation, no submit
+              currentIndex === questions.length - 1 ? (
+                <Button 
+                  onClick={() => router.push('/')} 
+                  size="lg"
+                  className="bg-green-600 hover:bg-green-700"
+                >
+                  ✓ Hoàn thành học tập
+                </Button>
+              ) : (
+                <Button onClick={handleNext} size="lg">
+                  Câu tiếp →
+                </Button>
+              )
             ) : (
-              <Button onClick={handleNext} size="lg">
-                Câu tiếp →
-              </Button>
+              // Quiz mode: submit at the end
+              currentIndex === questions.length - 1 ? (
+                <Button
+                  onClick={handleSubmit}
+                  disabled={answeredCount === 0}
+                  size="lg"
+                  className="bg-green-600 hover:bg-green-700"
+                >
+                  Nộp bài ({answeredCount}/{totalCount})
+                </Button>
+              ) : (
+                <Button onClick={handleNext} size="lg">
+                  Câu tiếp →
+                </Button>
+              )
             )}
           </div>
         </div>
 
         {/* Quiz Actions */}
-        {bankId !== 'wrong' && (
+        {bankId !== 'wrong' && !isStudyMode && (
           <div className="mt-4 flex justify-center gap-4">
             <Button
               variant="ghost"
@@ -549,6 +771,20 @@ export default function QuizPage() {
               className="text-red-500 hover:text-red-700 hover:bg-red-50"
             >
               🔄 Làm lại từ đầu
+            </Button>
+          </div>
+        )}
+
+        {/* Study mode: Back to home */}
+        {isStudyMode && (
+          <div className="mt-4 flex justify-center">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => router.push('/')}
+              className="text-gray-500 hover:text-gray-700"
+            >
+              ← Quay về trang chủ
             </Button>
           </div>
         )}

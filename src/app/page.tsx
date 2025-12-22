@@ -193,6 +193,16 @@ export default function Home() {
                       Làm tất cả ({bank.questions.length} câu)
                     </Button>
                   </Link>
+                  
+                  {/* Study Mode */}
+                  <div className="mt-4 pt-4 border-t">
+                    <p className="text-sm font-medium mb-3 text-green-700 dark:text-green-400">📚 Chế độ học tập:</p>
+                    <Link href={`/quiz/${bank.id}?count=${bank.questions.length}&mode=study`}>
+                      <Button variant="outline" className="w-full border-green-300 text-green-700 hover:bg-green-50">
+                        📖 Học tập ({bank.questions.length} câu)
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
               </CardContent>
             </Card>
