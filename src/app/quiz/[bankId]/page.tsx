@@ -431,8 +431,11 @@ export default function QuizPage() {
                       handleRevealAnswer(questionKey);
                     } else {
                       handleAnswerSelect(key);
-                      handleSubmit();
+                      // handleSubmit();
                     }
+                  }}
+                  onDoubleClick={()=>{
+                    handleNext()
                   }}
                   className={`w-full p-4 md:p-6 text-left rounded-lg border-2 transition-all ${buttonStyle}`}
                 >
