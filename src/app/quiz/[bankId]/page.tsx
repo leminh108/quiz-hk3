@@ -45,6 +45,28 @@ export default function QuizPage() {
   // For study mode: track revealed answers
   const [revealedAnswers, setRevealedAnswers] = useState<Set<string>>(new Set());
 
+    // Hàm tráo đổi thứ tự câu hỏi
+    const handleShuffleQuestions = () => {
+      const shuffled = [...questions];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      setQuestions(shuffled);
+      setCurrentIndex(0);
+      setAnswers(
+        shuffled.map((q) => ({
+          questionId: q.id,
+          selectedAnswer: null,
+          subAnswers: isPassageQuestion(q)
+            ? q.subQuestions.reduce((acc, sq) => ({ ...acc, [sq.id]: null }), {})
+            : undefined,
+        }))
+      );
+      setActiveSubIndex(0);
+      setRevealedAnswers(new Set());
+    };
+
   // Save session to localStorage
   const saveSession = useCallback(() => {
     if (bankId === 'wrong' || questions.length === 0) return;
@@ -679,6 +701,16 @@ export default function QuizPage() {
                 <span className="px-3 py-1 bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300 rounded-full text-sm font-medium">
                   📚 Chế độ học tập
                 </span>
+                )}
+                {isStudyMode && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleShuffleQuestions}
+                    className="ml-2 border-blue-600 text-blue-600 hover:bg-blue-50"
+                  >
+                    🔄 Đổi thứ tự câu hỏi
+                  </Button>
               )}
             </div>
             <div>
