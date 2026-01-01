@@ -8,15 +8,13 @@ import { Progress } from '@/components/ui/progress';
 import { getQuestionBank, getRandomQuestions, getOrderedQuestions } from '@/lib/questionBank';
 import {
   Question,
-  QuizAnswer,
   WrongQuestion,
   isPassageQuestion,
-  isSingleQuestion,
   PassageQuestion,
   SingleQuestion,
-  PassageSubQuestion
 } from '@/types/quiz';
 import { wrongQuestionsStorage, quizSessionStorage } from '@/lib/storage';
+import { playSuccessSound, playFailureSound } from '@/lib/soundEffects';
 
 // Interface for tracking answers including sub-questions
 interface ExtendedQuizAnswer {
@@ -451,6 +449,12 @@ export default function QuizPage() {
                     if (isStudyMode) {
                       handleAnswerSelect(key);
                       handleRevealAnswer(questionKey);
+                      // Play sound based on correctness
+                      if (key === question.correctAnswer) {
+                        playSuccessSound();
+                      } else {
+                        playFailureSound();
+                      }
                     } else {
                       handleAnswerSelect(key);
                       // handleSubmit();
@@ -613,6 +617,12 @@ export default function QuizPage() {
                             if (isStudyMode) {
                               handleSubAnswerSelect(currentSubQuestion.id, key);
                               handleRevealAnswer(subQuestionKey);
+                              // Play sound based on correctness
+                              if (key === currentSubQuestion.correctAnswer) {
+                                playSuccessSound();
+                              } else {
+                                playFailureSound();
+                              }
                             } else {
                               handleSubAnswerSelect(currentSubQuestion.id, key);
                               handleSubmit();
