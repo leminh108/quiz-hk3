@@ -236,8 +236,8 @@
           "id": 99,
           "question": "Choose the correct word for blank 99",
           "options": { "A": "Because", "B": "Although", "C": "Because of", "D": "During" },
-          "correctAnswer": "D",
-          "explanation": "Mặc dù có sự bất tiện, ban quản lý vẫn kỳ vọng... → **Although**."
+          "correctAnswer": "C",
+          "explanation": "Vì **the inconvenience** là cụm danh từ, chúng ta bắt buộc phải dùng Because of."
         }
       ]
     },

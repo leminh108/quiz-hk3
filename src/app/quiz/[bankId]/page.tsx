@@ -188,6 +188,14 @@ export default function QuizPage() {
         return newAnswers;
       });
     }
+    // Remove focus from any focused element to clear lingering focus/active styles
+    if (typeof document !== 'undefined' && document.activeElement instanceof HTMLElement) {
+      try {
+        document.activeElement.blur();
+      } catch (e) {
+        // ignore
+      }
+    }
   }, [currentIndex, isStudyMode]);
 
   const currentQuestion = questions[currentIndex];
