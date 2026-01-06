@@ -509,8 +509,8 @@ export default function QuizPage() {
   };
 
   const renderPassageQuestion = (question: PassageQuestion) => {
-    const currentSubQuestion = question.subQuestions[activeSubIndex];
-    const subAnswer = currentAnswer?.subAnswers?.[currentSubQuestion.id];
+    const currentSubQuestion = question.subQuestions[0];
+    const subAnswer = currentAnswer?.subAnswers?.[currentSubQuestion?.id];
 
     // Highlight blanks in the passage
     const renderPassageWithHighlights = () => {
@@ -582,7 +582,7 @@ export default function QuizPage() {
         {/* Current Sub-question */}
         <div className="border-t pt-6">
           <h3 className="text-lg font-semibold mb-4">
-            Câu {currentSubQuestion.id}: {currentSubQuestion.question}
+            Câu {currentSubQuestion?.id}: {currentSubQuestion?.question}
           </h3>
 
           {(() => {
