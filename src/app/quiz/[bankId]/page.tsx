@@ -509,7 +509,11 @@ export default function QuizPage() {
   };
 
   const renderPassageQuestion = (question: PassageQuestion) => {
-    const currentSubQuestion = question.subQuestions[0];
+    // Clamp activeSubIndex to a valid range for the current question to avoid
+    // transient renders where activeSubIndex may be out-of-bounds (e.g. when
+    // moving from a passage with more sub-questions to one with fewer).
+    const safeSubIndex = Math.min(Math.max(0, activeSubIndex), Math.max(0, question.subQuestions.length - 1));
+    const currentSubQuestion = question.subQuestions[safeSubIndex];
     const subAnswer = currentAnswer?.subAnswers?.[currentSubQuestion?.id];
 
     // Highlight blanks in the passage
@@ -519,7 +523,7 @@ export default function QuizPage() {
       // Replace blank markers with styled spans
       question.subQuestions.forEach((sq, idx) => {
         const blankPattern = new RegExp(`____${sq.id}____`, 'g');
-        const isActive = idx === activeSubIndex;
+        const isActive = idx === safeSubIndex;
         const hasAnswer = currentAnswer?.subAnswers?.[sq.id];
 
         passageText = passageText.replace(
@@ -566,7 +570,7 @@ export default function QuizPage() {
               <button
                 key={sq.id}
                 onClick={() => setActiveSubIndex(idx)}
-                className={`px-4 py-2 rounded-lg font-medium transition-all ${idx === activeSubIndex
+                className={`px-4 py-2 rounded-lg font-medium transition-all ${idx === safeSubIndex
                   ? 'bg-blue-500 text-white'
                   : hasAnswer
                     ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300'
@@ -592,7 +596,7 @@ export default function QuizPage() {
             return (
               <>
                 <div className="space-y-3">
-                  {(Object.keys(currentSubQuestion.options) as Array<'A' | 'B' | 'C' | 'D'>).map(
+                  {(Object.keys(currentSubQuestion?.options || {}) as Array<'A' | 'B' | 'C' | 'D'>).map(
                     (key) => {
                       const isCorrect = key === currentSubQuestion.correctAnswer;
                       const isSelected = subAnswer === key;
@@ -673,21 +677,21 @@ export default function QuizPage() {
             );
           })()}
 
-          {/* Sub-question navigation */}
+                {/* Sub-question navigation */}
           <div className="flex justify-between mt-4 pt-4 border-t">
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => setActiveSubIndex(Math.max(0, activeSubIndex - 1))}
-              disabled={activeSubIndex === 0}
+              onClick={() => setActiveSubIndex(Math.max(0, safeSubIndex - 1))}
+              disabled={safeSubIndex === 0}
             >
               ← Câu con trước
             </Button>
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => setActiveSubIndex(Math.min(question.subQuestions.length - 1, activeSubIndex + 1))}
-              disabled={activeSubIndex === question.subQuestions.length - 1}
+              onClick={() => setActiveSubIndex(Math.min(question.subQuestions.length - 1, safeSubIndex + 1))}
+              disabled={safeSubIndex === question.subQuestions.length - 1}
             >
               Câu con tiếp →
             </Button>
@@ -709,7 +713,8 @@ export default function QuizPage() {
               </h1>
               {isStudyMode && (
                 <span className="px-3 py-1 bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300 rounded-full text-sm font-medium">
-                  📚 Chế độ học tập
+                  <span className="mr-1">📚</span>
+                  <span className="hidden sm:inline">Chế độ học tập</span>
                 </span>
                 )}
                 {isStudyMode && (
@@ -719,7 +724,8 @@ export default function QuizPage() {
                     onClick={handleShuffleQuestions}
                     className="ml-2 border-blue-600 text-blue-600 hover:bg-blue-50"
                   >
-                    🔄 Đổi thứ tự câu hỏi
+                    <span className="mr-1">🔄</span>
+                    <span className="hidden sm:inline">Đổi thứ tự câu hỏi</span>
                   </Button>
               )}
             </div>
@@ -731,10 +737,9 @@ export default function QuizPage() {
                     variant="ghost"
                     size="sm"
                     onClick={() => router.push('/')}
-                    className="text-gray-500 hover:text-gray-700  border-2 border-green-600 rounded-lg p-2
-                    "
+                    className="text-gray-500 hover:text-gray-700  border-2 border-green-600 rounded-lg p-2"
                   >
-                    ← Quay về trang chủ
+                    ← Quay về
                   </Button>
                 </div>
               )}
@@ -845,7 +850,7 @@ export default function QuizPage() {
               onClick={() => router.push('/')}
               className="text-gray-500 hover:text-gray-700"
             >
-              ← Quay về trang chủ
+              ← Quay về
             </Button>
           </div>
         )}

@@ -236,7 +236,7 @@
           "id": 99,
           "question": "Choose the correct word for blank 99",
           "options": { "A": "Because", "B": "Although", "C": "Because of", "D": "During" },
-          "correctAnswer": "B",
+          "correctAnswer": "D",
           "explanation": "Mặc dù có sự bất tiện, ban quản lý vẫn kỳ vọng... → **Although**."
         }
       ]

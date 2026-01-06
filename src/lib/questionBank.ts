@@ -73,8 +73,9 @@ const networkBank = mergeQuestionParts(
 );
 
 export const questionBanks: QuestionBank[] = [
-  networkBank as QuestionBank,
+  // English first, then Network (mạng máy tính), followed by others
   englishBank,
+  networkBank as QuestionBank,
   mergeQuestionParts(
     databaseMeta.id,
     databaseMeta.name,
