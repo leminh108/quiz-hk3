@@ -3,6 +3,7 @@ import { useState } from "react";
 import Button from "@/components/common/Button";
 import Select from "@/components/common/Select";
 import DatePicker from "@/components/common/DatePicker";
+import AxiosFetchDemo from '@/components/ui/AxiosFetchDemo';
 
 const selectOptions = [
   { label: "Option 1", value: "1" },
@@ -33,6 +34,9 @@ export default function StorybookPage() {
       <div>
         <h2 className="font-semibold mb-2">DatePicker</h2>
         <DatePicker value={dateValue} onChange={setDateValue} />
+      </div>
+      <div>
+        <AxiosFetchDemo />
       </div>
     </div>
   );

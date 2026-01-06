@@ -69,11 +69,7 @@ const networkBank = mergeQuestionParts(
   networkMeta.id,
   networkMeta.name,
   networkMeta.description,
-  networkParts.map((part: any) => ({
-    partId: part.id,
-    partName: part.name,
-    questions: part.questions as import('@/types/quiz').Question[],
-  }))
+  networkParts as unknown as QuestionPart[]
 );
 
 export const questionBanks: QuestionBank[] = [
