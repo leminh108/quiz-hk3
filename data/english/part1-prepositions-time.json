@@ -6,7 +6,12 @@
       "id": 1,
       "type": "single",
       "question": "The art exhibition will be held tomorrow afternoon ______ 4:00.",
-      "options": { "A": "in", "B": "on", "C": "at", "D": "for" },
+      "options": {
+        "A": "in",
+        "B": "on",
+        "C": "at",
+        "D": "for"
+      },
       "correctAnswer": "C",
       "explanation": "Dùng 'at' với giờ cụ thể. 4:00 là thời điểm chính xác → at 4:00"
     },
@@ -14,7 +19,12 @@
       "id": 2,
       "type": "single",
       "question": "The safety inspection has been postponed ______ next month.",
-      "options": { "A": "until", "B": "by", "C": "for", "D": "to" },
+      "options": {
+        "A": "until",
+        "B": "by",
+        "C": "for",
+        "D": "to"
+      },
       "correctAnswer": "A",
       "explanation": "'Postponed until' = dời đến khi, kéo dài tới thời điểm đó."
     },
@@ -22,7 +32,12 @@
       "id": 3,
       "type": "single",
       "question": "Nelson's Book Café has not made a profit ______ six months.",
-      "options": { "A": "for", "B": "during", "C": "since", "D": "in" },
+      "options": {
+        "A": "for",
+        "B": "during",
+        "C": "since",
+        "D": "in"
+      },
       "correctAnswer": "A",
       "explanation": "'For' dùng với khoảng thời gian (six months)."
     },
@@ -30,7 +45,12 @@
       "id": 4,
       "type": "single",
       "question": "They will be back from their business trip ______ Sunday.",
-      "options": { "A": "in", "B": "on", "C": "at", "D": "by" },
+      "options": {
+        "A": "in",
+        "B": "on",
+        "C": "at",
+        "D": "by"
+      },
       "correctAnswer": "B",
       "explanation": "Dùng 'on' với các ngày trong tuần (Sunday, Monday, etc.)."
     },
@@ -38,7 +58,12 @@
       "id": 5,
       "type": "single",
       "question": "Mr. Morris was promoted to chief financial officer ______ 2010.",
-      "options": { "A": "in", "B": "on", "C": "at", "D": "during" },
+      "options": {
+        "A": "in",
+        "B": "on",
+        "C": "at",
+        "D": "during"
+      },
       "correctAnswer": "A",
       "explanation": "Dùng 'in' với năm (in 2010, in 2024, etc.)."
     },
@@ -46,7 +71,12 @@
       "id": 6,
       "type": "single",
       "question": "The food choices for the banquet next Saturday must be sent to the caterer ______ this Friday.",
-      "options": { "A": "at", "B": "on", "C": "by", "D": "until" },
+      "options": {
+        "A": "at",
+        "B": "on",
+        "C": "by",
+        "D": "until"
+      },
       "correctAnswer": "C",
       "explanation": "'By' dùng cho deadline - phải gửi trễ nhất là thứ Sáu."
     },
@@ -54,119 +84,194 @@
       "id": 7,
       "type": "single",
       "question": "He visits ______ noon every day except Saturday and Sunday.",
-      "options": { "A": "in", "B": "on", "C": "at", "D": "for" },
+      "options": {
+        "A": "in",
+        "B": "on",
+        "C": "at",
+        "D": "for"
+      },
       "correctAnswer": "C",
       "explanation": "Dùng 'at' với thời điểm chính xác: at noon, at midnight."
     },
     {
-      "id": 30,
+      "id": 8,
       "type": "single",
       "question": "Evan's Restaurant will close ______ 9 o'clock starting next week.",
-      "options": { "A": "at", "B": "in", "C": "on", "D": "to" },
+      "options": {
+        "A": "at",
+        "B": "in",
+        "C": "on",
+        "D": "to"
+      },
       "correctAnswer": "A",
       "explanation": "'At' + giờ cụ thể: at 9 o'clock."
     },
     {
-      "id": 31,
+      "id": 9,
       "type": "single",
       "question": "Employees who would like to take their summer vacations must inform Mr. Wilson in the HR Department ______ October 21.",
-      "options": { "A": "by", "B": "until", "C": "for", "D": "as" },
+      "options": {
+        "A": "by",
+        "B": "until",
+        "C": "for",
+        "D": "as"
+      },
       "correctAnswer": "A",
       "explanation": "'By' + mốc thời gian = deadline (trễ nhất là)."
     },
     {
-      "id": 32,
+      "id": 10,
       "type": "single",
       "question": "The CEO will not be coming to the office ______ next week.",
-      "options": { "A": "at", "B": "on", "C": "until", "D": "with" },
+      "options": {
+        "A": "at",
+        "B": "on",
+        "C": "until",
+        "D": "with"
+      },
       "correctAnswer": "C",
       "explanation": "'Not... until' = mãi tới khi."
     },
     {
-      "id": 33,
+      "id": 11,
       "type": "single",
       "question": "The packages were shipped from the warehouse ______ Thursday.",
-      "options": { "A": "in", "B": "at", "C": "into", "D": "on" },
+      "options": {
+        "A": "in",
+        "B": "at",
+        "C": "into",
+        "D": "on"
+      },
       "correctAnswer": "D",
       "explanation": "'On' + ngày/thứ: on Thursday, on Monday."
     },
     {
-      "id": 46,
+      "id": 12,
       "type": "single",
       "question": "The meeting will start ___ 9:30 a.m.",
-      "options": { "A": "in", "B": "on", "C": "at", "D": "by" },
+      "options": {
+        "A": "in",
+        "B": "on",
+        "C": "at",
+        "D": "by"
+      },
       "correctAnswer": "C",
       "explanation": "Dùng at trước giờ cụ thể."
     },
     {
-      "id": 47,
+      "id": 13,
       "type": "single",
       "question": "The report must be submitted ___ Friday.",
-      "options": { "A": "until", "B": "by", "C": "for", "D": "on" },
+      "options": {
+        "A": "until",
+        "B": "by",
+        "C": "for",
+        "D": "on"
+      },
       "correctAnswer": "B",
       "explanation": "By + mốc thời gian dùng để chỉ deadline."
     },
     {
-      "id": 48,
+      "id": 14,
       "type": "single",
       "question": "Mr. Lee has worked at the company ___ 2018.",
-      "options": { "A": "since", "B": "for", "C": "during", "D": "by" },
+      "options": {
+        "A": "since",
+        "B": "for",
+        "C": "during",
+        "D": "by"
+      },
       "correctAnswer": "A",
       "explanation": "Since dùng với mốc thời gian cụ thể."
     },
     {
-      "id": 51,
+      "id": 15,
       "type": "single",
       "question": "Please wait here ___ the manager returns.",
-      "options": { "A": "by", "B": "during", "C": "until", "D": "for" },
+      "options": {
+        "A": "by",
+        "B": "during",
+        "C": "until",
+        "D": "for"
+      },
       "correctAnswer": "C",
       "explanation": "Until dùng để chỉ hành động kéo dài đến khi sự việc xảy ra."
     },
     {
-      "id": 52,
+      "id": 16,
       "type": "single",
       "question": "The package was delivered ___ Monday morning.",
-      "options": { "A": "in", "B": "on", "C": "at", "D": "by" },
+      "options": {
+        "A": "in",
+        "B": "on",
+        "C": "at",
+        "D": "by"
+      },
       "correctAnswer": "B",
       "explanation": "On dùng với ngày hoặc ngày + buổi."
     },
     {
-      "id": 59,
+      "id": 17,
       "type": "single",
       "question": "Please remain seated ___ the plane has landed.",
-      "options": { "A": "during", "B": "until", "C": "by", "D": "for" },
+      "options": {
+        "A": "during",
+        "B": "until",
+        "C": "by",
+        "D": "for"
+      },
       "correctAnswer": "B",
       "explanation": "Until diễn tả hành động kéo dài tới thời điểm."
     },
     {
-      "id": 66,
+      "id": 18,
       "type": "single",
       "question": "The project deadline has been extended ______ two more weeks.",
-      "options": { "A": "by", "B": "for", "C": "until", "D": "in" },
+      "options": {
+        "A": "by",
+        "B": "for",
+        "C": "until",
+        "D": "in"
+      },
       "correctAnswer": "B",
       "explanation": "**For** dùng với khoảng thời gian kéo dài: for two weeks, for a month.\n\n⚠️ Bẫy: 'by' chỉ deadline, không phải khoảng thời gian."
     },
     {
-      "id": 67,
+      "id": 19,
       "type": "single",
       "question": "The store will remain closed ______ the renovation is complete.",
-      "options": { "A": "by", "B": "for", "C": "until", "D": "during" },
+      "options": {
+        "A": "by",
+        "B": "for",
+        "C": "until",
+        "D": "during"
+      },
       "correctAnswer": "C",
       "explanation": "**Until** = cho đến khi. Cửa hàng đóng cửa cho đến khi việc sửa chữa hoàn tất.\n\n📌 Until + mệnh đề (S + V) hoặc danh từ."
     },
     {
-      "id": 76,
+      "id": 20,
       "type": "single",
       "question": "All employees must complete the training ___ the end of this month.",
-      "options": { "A": "until", "B": "by", "C": "during", "D": "for" },
+      "options": {
+        "A": "until",
+        "B": "by",
+        "C": "during",
+        "D": "for"
+      },
       "correctAnswer": "B",
       "explanation": "**By** dùng để chỉ DEADLINE (trễ nhất là)."
     },
     {
-      "id": 77,
+      "id": 21,
       "type": "single",
       "question": "The manager will not be available ___ next Monday.",
-      "options": { "A": "by", "B": "until", "C": "during", "D": "for" },
+      "options": {
+        "A": "by",
+        "B": "until",
+        "C": "during",
+        "D": "for"
+      },
       "correctAnswer": "B",
       "explanation": "Cấu trúc **not ... until** = mãi đến khi."
     }

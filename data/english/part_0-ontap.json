@@ -1,0 +1,487 @@
+{
+  "id": "toeic-review-complete-002",
+  "name": "Tổng hợp ôn tập TOEIC (Reading & Grammar)",
+  "description": "Bộ câu hỏi bao gồm Ngữ pháp và Đọc hiểu (đã cập nhật đáp án theo Teacher's Key).",
+  "questions": [
+    {
+      "id": 1,
+      "question": "Botswana is famous ______ its diamond mines.",
+      "options": {
+        "A": "for",
+        "B": "of",
+        "C": "with",
+        "D": "by"
+      },
+      "correctAnswer": "A",
+      "explanation": "Famous for: nổi tiếng vì điều gì."
+    },
+    {
+      "id": 2,
+      "question": "Padang food is a style of Indonesian food that is eaten ______ one's fingers.",
+      "options": {
+        "A": "by",
+        "B": "with",
+        "C": "in",
+        "D": "to"
+      },
+      "correctAnswer": "B",
+      "explanation": "Eat with fingers: ăn bằng tay (chỉ công cụ)."
+    },
+    {
+      "id": 3,
+      "question": "This package must be in Wellington at least ______ noon Tuesday.",
+      "options": {
+        "A": "on",
+        "B": "at",
+        "C": "for",
+        "D": "by"
+      },
+      "correctAnswer": "D",
+      "explanation": "By + mốc thời gian: trước hoặc muộn nhất là (deadline)."
+    },
+    {
+      "id": 4,
+      "question": "Ms. Chadwick was disappointed ______ the results of the advertising campaign.",
+      "options": {
+        "A": "for",
+        "B": "of",
+        "C": "on",
+        "D": "with"
+      },
+      "correctAnswer": "D",
+      "explanation": "Disappointed with: thất vọng với."
+    },
+    {
+      "id": 5,
+      "question": "The cheapest way to move goods overseas is ______, but that is also the slowest way.",
+      "options": {
+        "A": "by ships",
+        "B": "on ship",
+        "C": "by ship",
+        "D": "to ships"
+      },
+      "correctAnswer": "C",
+      "explanation": "By + phương tiện số ít (by ship)."
+    },
+    {
+      "id": 6,
+      "question": "______ the next few months, we hope to arrange a joint venture with a company in the Czech Republic.",
+      "options": {
+        "A": "Within",
+        "B": "With",
+        "C": "Since",
+        "D": "At"
+      },
+      "correctAnswer": "A",
+      "explanation": "Within + khoảng thời gian: trong vòng."
+    },
+    {
+      "id": 7,
+      "question": "Choudhuri was hired because he is familiar ______ the latest developments in biotechnology.",
+      "options": {
+        "A": "to",
+        "B": "with",
+        "C": "in",
+        "D": "about"
+      },
+      "correctAnswer": "B",
+      "explanation": "Familiar with: am hiểu/quen thuộc với."
+    },
+    {
+      "id": 8,
+      "question": "Most of the delegates arrived ______ limousines.",
+      "options": {
+        "A": "at",
+        "B": "on",
+        "C": "in",
+        "D": "by"
+      },
+      "correctAnswer": "C",
+      "explanation": "Arrive in + car/taxi/limousine."
+    },
+    {
+      "id": 9,
+      "question": "The store is open ______ nine to six.",
+      "options": {
+        "A": "from",
+        "B": "at",
+        "C": "by",
+        "D": "between"
+      },
+      "correctAnswer": "A",
+      "explanation": "From... to...: từ... đến..."
+    },
+    {
+      "id": 10,
+      "question": "Bonnie has been married ______ Steve for two years.",
+      "options": {
+        "A": "with",
+        "B": "at",
+        "C": "by",
+        "D": "to"
+      },
+      "correctAnswer": "D",
+      "explanation": "Married to someone: kết hôn với ai."
+    },
+    {
+      "id": 11,
+      "question": "If there ______ an unforeseen delay, we will finish this project by the end of the month.",
+      "options": {
+        "A": "will not be",
+        "B": "does not",
+        "C": "was not",
+        "D": "is not"
+      },
+      "correctAnswer": "D",
+      "explanation": "Câu điều kiện loại 1."
+    },
+    {
+      "id": 12,
+      "question": "I am afraid we cannot agree to this proposal ______ the offer is substantially improved.",
+      "options": {
+        "A": "if",
+        "B": "when",
+        "C": "unless",
+        "D": "even"
+      },
+      "correctAnswer": "C",
+      "explanation": "Unless = If not (trừ khi)."
+    },
+    {
+      "id": 13,
+      "question": "According to the doctor, you will feel better within a week if you ______ this medication as prescribed.",
+      "options": {
+        "A": "will take",
+        "B": "take",
+        "C": "had taken",
+        "D": "taking"
+      },
+      "correctAnswer": "B",
+      "explanation": "Câu điều kiện loại 1 (If + hiện tại đơn)."
+    },
+    {
+      "id": 14,
+      "question": "Where ______ choose to go, if you could get a job in any city in the world?",
+      "options": {
+        "A": "will you",
+        "B": "did you",
+        "C": "can you",
+        "D": "would you"
+      },
+      "correctAnswer": "D",
+      "explanation": "Câu điều kiện loại 2 (giả định không thật)."
+    },
+    {
+      "id": 15,
+      "question": "If Keiji ______ to the trade show, he will not be able to attend the monthly meeting.",
+      "options": {
+        "A": "goes",
+        "B": "had gone",
+        "C": "was going",
+        "D": "will go"
+      },
+      "correctAnswer": "A",
+      "explanation": "Câu điều kiện loại 1."
+    },
+    {
+      "id": 16,
+      "question": "Our insurance company ______ the damage done during the storm if we had renewed our policy on time.",
+      "options": {
+        "A": "will cover",
+        "B": "are covering",
+        "C": "would have covered",
+        "D": "will be covering"
+      },
+      "correctAnswer": "C",
+      "explanation": "Câu điều kiện loại 3 (trái với quá khứ)."
+    },
+    {
+      "id": 17,
+      "question": "If I ______ you, I would get as much experience in the hospitality industry as possible...",
+      "options": {
+        "A": "am",
+        "B": "were",
+        "C": "will be",
+        "D": "would be"
+      },
+      "correctAnswer": "B",
+      "explanation": "Câu điều kiện loại 2 (If I were you)."
+    },
+    {
+      "id": 18,
+      "question": "If we ______ enough money in advance, we would not have been able to expand the business...",
+      "options": {
+        "A": "have not saved",
+        "B": "did not save",
+        "C": "had not saved",
+        "D": "were not saving"
+      },
+      "correctAnswer": "C",
+      "explanation": "Câu điều kiện loại 3 (If + Past Perfect)."
+    },
+    {
+      "id": 19,
+      "question": "If you see Mr. Hawkins this afternoon, ______ tell him about the new manufacturing project?",
+      "options": {
+        "A": "will you",
+        "B": "do you",
+        "C": "might you",
+        "D": "are you"
+      },
+      "correctAnswer": "A",
+      "explanation": "Câu yêu cầu/hỏi lịch sự (loại 1)."
+    },
+    {
+      "id": 20,
+      "question": "Nobody would have known about the leak in the supply room, if Dan ______ it by chance one day.",
+      "options": {
+        "A": "had not discovered",
+        "B": "was not discovering",
+        "C": "does not discover",
+        "D": "could not discover"
+      },
+      "correctAnswer": "A",
+      "explanation": "Câu điều kiện loại 3."
+    },
+    {
+      "id": 21,
+      "question": "Each employee ______ required to complete the survey.",
+      "options": {
+        "A": "is",
+        "B": "are",
+        "C": "have been",
+        "D": "be"
+      },
+      "correctAnswer": "A",
+      "explanation": "Each + danh từ số ít -> động từ số ít."
+    },
+    {
+      "id": 22,
+      "question": "The boxes ______ in the storage room.",
+      "options": {
+        "A": "are",
+        "B": "is",
+        "C": "was",
+        "D": "has been"
+      },
+      "correctAnswer": "A",
+      "explanation": "The boxes (số nhiều) -> are."
+    },
+    {
+      "id": 23,
+      "question": "A number of requests ______ pending.",
+      "options": {
+        "A": "are",
+        "B": "is",
+        "C": "was",
+        "D": "has"
+      },
+      "correctAnswer": "A",
+      "explanation": "A number of (nhiều) -> động từ số nhiều."
+    },
+    {
+      "id": 24,
+      "question": "The number of requests ______ increasing.",
+      "options": {
+        "A": "is",
+        "B": "are",
+        "C": "were",
+        "D": "have"
+      },
+      "correctAnswer": "A",
+      "explanation": "The number of (con số/số lượng) -> động từ số ít."
+    },
+    {
+      "id": 25,
+      "question": "Neither the manager nor the assistants ______ available this morning.",
+      "options": {
+        "A": "are",
+        "B": "is",
+        "C": "was",
+        "D": "has been"
+      },
+      "correctAnswer": "A",
+      "explanation": "Neither...nor: chia theo danh từ gần nhất (assistants - số nhiều)."
+    },
+    {
+      "id": 26,
+      "question": "The committee ______ divided on the issue.",
+      "options": {
+        "A": "is",
+        "B": "are",
+        "C": "have been",
+        "D": "were"
+      },
+      "correctAnswer": "A",
+      "explanation": "Danh từ tập hợp thường chia số ít (trong ngữ pháp TOEIC phổ thông)."
+    },
+    {
+      "id": 27,
+      "question": "The data ______ inconclusive at this stage.",
+      "options": {
+        "A": "are",
+        "B": "is",
+        "C": "was",
+        "D": "has been"
+      },
+      "correctAnswer": "D",
+      "explanation": "(Theo đáp án giáo viên): 'Data' được coi là số ít không đếm được. Dùng 'has been' để nhấn mạnh trạng thái kéo dài đến hiện tại ('at this stage')."
+    },
+    {
+      "id": 28,
+      "question": "More than one applicant ______ misread the instructions.",
+      "options": {
+        "A": "has",
+        "B": "have",
+        "C": "were",
+        "D": "are"
+      },
+      "correctAnswer": "B",
+      "explanation": "(Theo đáp án giáo viên): Dựa trên ý nghĩa 'hơn một người' tức là 'nhiều người' nên dùng số nhiều 'have'. (Lưu ý: Ngữ pháp chuẩn mực thường dùng số ít 'has', nhưng đáp án này tuân theo key của bài thi)."
+    },
+    {
+      "id": 29,
+      "question": "Ten dollars ______ not enough to cover the fee.",
+      "options": {
+        "A": "is",
+        "B": "are",
+        "C": "were",
+        "D": "have"
+      },
+      "correctAnswer": "A",
+      "explanation": "Tiền bạc (tổng thể) -> động từ số ít."
+    },
+    {
+      "id": 30,
+      "question": "There ______ a printer and two scanners in the meeting room.",
+      "options": {
+        "A": "are",
+        "B": "is",
+        "C": "has been",
+        "D": "was"
+      },
+      "correctAnswer": "B",
+      "explanation": "There + be: chia theo danh từ đứng liền sau (a printer - số ít)."
+    },
+    {
+      "id": 31,
+      "question": "All the technical staff ______ we employ are fully trained professionals.",
+      "options": {
+        "A": "where",
+        "B": "who",
+        "C": "whose",
+        "D": "which"
+      },
+      "correctAnswer": "B",
+      "explanation": "Who thay thế cho người."
+    },
+    {
+      "id": 32,
+      "question": "The processing factory, ______ we visited only last month, has temporarily shut down...",
+      "options": {
+        "A": "where",
+        "B": "what",
+        "C": "which",
+        "D": "whose"
+      },
+      "correctAnswer": "C",
+      "explanation": "Which thay thế cho vật (factory) trong mệnh đề không xác định."
+    },
+    {
+      "id": 33,
+      "question": "The shift supervisor ______ spoke to you is called Mr. Hughes.",
+      "options": {
+        "A": "that",
+        "B": "which",
+        "C": "whose",
+        "D": "what"
+      },
+      "correctAnswer": "A",
+      "explanation": "That có thể thay thế cho Who trong mệnh đề xác định."
+    },
+    {
+      "id": 34,
+      "question": "The customer ______ soup was cold was offered a discount of 10 percent.",
+      "options": {
+        "A": "which",
+        "B": "who",
+        "C": "that",
+        "D": "whose"
+      },
+      "correctAnswer": "D",
+      "explanation": "Whose chỉ sở hữu."
+    },
+    {
+      "id": 35,
+      "question": "Nobody could remember the name of the restaurant ______ we had dined the previous evening.",
+      "options": {
+        "A": "when",
+        "B": "what",
+        "C": "which",
+        "D": "where"
+      },
+      "correctAnswer": "D",
+      "explanation": "Where thay thế cho nơi chốn."
+    },
+    {
+      "id": 36,
+      "question": "The trainee with ______ you will be working is inexperienced, but very enthusiastic.",
+      "options": {
+        "A": "that",
+        "B": "who",
+        "C": "whom",
+        "D": "whose"
+      },
+      "correctAnswer": "C",
+      "explanation": "Sau giới từ (with) phải dùng Whom."
+    },
+    {
+      "id": 37,
+      "question": "We were rather surprised to find the report ______ we received from the supplier was full of criticism.",
+      "options": {
+        "A": "that",
+        "B": "where",
+        "C": "whose",
+        "D": "what"
+      },
+      "correctAnswer": "A",
+      "explanation": "That thay thế cho vật (report)."
+    },
+    {
+      "id": 38,
+      "question": "The accountant ______ figures you queried has replied by e-mail...",
+      "options": {
+        "A": "who",
+        "B": "whom",
+        "C": "whose",
+        "D": "what"
+      },
+      "correctAnswer": "C",
+      "explanation": "Whose chỉ sở hữu (số liệu của kế toán)."
+    },
+    {
+      "id": 39,
+      "question": "The investigators were surprised by ______ they found during the inspection.",
+      "options": {
+        "A": "what",
+        "B": "that",
+        "C": "which",
+        "D": "where"
+      },
+      "correctAnswer": "A",
+      "explanation": "What = the thing that (những gì)."
+    },
+    {
+      "id": 40,
+      "question": "The complex merger finally went through, ______ was a great relief to both companies.",
+      "options": {
+        "A": "what",
+        "B": "which",
+        "C": "that",
+        "D": "where"
+      },
+      "correctAnswer": "B",
+      "explanation": "Which thay thế cho cả mệnh đề phía trước."
+    }
+  ]
+}

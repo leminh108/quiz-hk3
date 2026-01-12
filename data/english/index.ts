@@ -11,6 +11,7 @@ import part10 from './part10-subjunctive-mood-passages.json';
 import part11 from './part11-subject-verb-agreement.json';
 import part12 from './part12-subject-verb-agreement-extended.json';
 import part13 from './part13-subject-verb-agreement-passages.json';
+import part0 from './part_0-ontap.json';
 
 export const englishParts = [
   part1,
@@ -26,4 +27,5 @@ export const englishParts = [
   part11,
   part12,
   part13,
+  part0,
 ];
